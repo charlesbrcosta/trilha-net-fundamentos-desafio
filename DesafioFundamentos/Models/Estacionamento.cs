@@ -4,6 +4,8 @@ namespace DesafioFundamentos.Models
     {
         private decimal precoInicial = 0;
         private decimal precoPorHora = 0;
+
+        private string placa = string.Empty;
         private List<string> veiculos = new List<string>();
 
         public Estacionamento(decimal precoInicial, decimal precoPorHora)
@@ -17,6 +19,29 @@ namespace DesafioFundamentos.Models
             // TODO: Pedir para o usuário digitar uma placa (ReadLine) e adicionar na lista "veiculos"
             // *IMPLEMENTE AQUI*
             Console.WriteLine("Digite a placa do veículo para estacionar:");
+            placa = Console.ReadLine().Trim().ToUpper();
+
+            if (string.IsNullOrEmpty(placa))
+            {
+                Console.WriteLine("Preenchimento obrigatório. Por favor, informe a placa do veiculo. Ex: xxx1234");
+                return;
+            }
+
+            if (veiculos.Any(veiculo => veiculo.Equals(placa)))
+            {
+                Console.WriteLine($"O veiculo de placa {placa} já encontra-se no estacionamento");
+                return;
+            }   
+
+            if (placa.Length == 7)
+            {
+                veiculos.Add(placa);
+                Console.WriteLine($"O veiculo de placa {placa} foi estacinado com sucesso");
+            }
+            else
+            {
+                Console.WriteLine($"A placa do veiculo precisa ter 7 caracteres. Ex: xxx1234");
+            }
         }
 
         public void RemoverVeiculo()
@@ -25,7 +50,7 @@ namespace DesafioFundamentos.Models
 
             // Pedir para o usuário digitar a placa e armazenar na variável placa
             // *IMPLEMENTE AQUI*
-            string placa = "";
+            placa = "";
 
             // Verifica se o veículo existe
             if (veiculos.Any(x => x.ToUpper() == placa.ToUpper()))
